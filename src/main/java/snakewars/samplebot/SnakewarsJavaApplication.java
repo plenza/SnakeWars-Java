@@ -53,7 +53,7 @@ public class SnakewarsJavaApplication implements CommandLineRunner {
 
             SnakeEngine snakeEngine = new SnakeEngine(mySnakeId);
 
-            while (new Scanner(System.in).next() != null) {
+            while (true) {
                 String json = readLine();
                 GameBoardState gameBoardState = new GameBoardState(gson.fromJson(json, GameStateDTO.class));
                 Move move = snakeEngine.getNextMove(gameBoardState);
