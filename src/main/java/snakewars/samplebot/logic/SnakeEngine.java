@@ -4,10 +4,7 @@ import snakewars.samplebot.GameBoardState;
 import snakewars.samplebot.dtos.PointDTO;
 import snakewars.samplebot.dtos.SnakeDTO;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class SnakeEngine {
 
@@ -28,11 +25,12 @@ public class SnakeEngine {
             Set<PointDTO> occupiedCells = gameBoardState.getOccupiedCells();
 
             // Check possible moves in random order.
-            List<Move> moves = Arrays.asList(Move.LEFT, Move.RIGHT, Move.STRAIGHT);
+            List<Move> moves = new LinkedList<>(Arrays.asList(Move.LEFT, Move.RIGHT, Move.STRAIGHT));
 
             while (moves.stream().anyMatch(predicate -> true)) {
                 // Select random move.
-                Move move = moves.get(random.nextInt(moves.size()));
+                int randomIndex = random.nextInt(moves.size());
+                Move move = moves.get(randomIndex);
                 moves.remove(move);
 
                 PointDTO newHead = gameBoardState.getSnakeNewHeadPosition(mySnakeId, move);
