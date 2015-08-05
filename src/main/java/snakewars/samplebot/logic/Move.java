@@ -42,4 +42,8 @@ public class Move {
         return new PointDTO((head.getX() + offset.DX + boardSize.getWidth()) % boardSize.getWidth(),
                 (head.getY() + offset.DY + boardSize.getHeight()) % boardSize.getHeight());
     }
+
+    public String getCommand() {
+        return command;
+    }
 }

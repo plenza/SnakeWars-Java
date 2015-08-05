@@ -7,10 +7,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import snakewars.samplebot.dtos.GameStateDTO;
+import snakewars.samplebot.logic.Move;
 import snakewars.samplebot.logic.SnakeEngine;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -51,8 +53,15 @@ public class SnakewarsJavaApplication implements CommandLineRunner {
 
             SnakeEngine snakeEngine = new SnakeEngine(mySnakeId);
 
-            String json = readLine();
-            GameStateDTO gameState = gson.fromJson(json, GameStateDTO.class);
+            while (new Scanner(System.in).next() != null) {
+                String json = readLine();
+                GameBoardState gameBoardState = new GameBoardState(gson.fromJson(json, GameStateDTO.class));
+                Move move = snakeEngine.getNextMove(gameBoardState);
+                if (move.getCommand() != null && move.getCommand().trim().length() > 0) {
+                    System.out.println(String.format("Sending command {%s}", move.getCommand()));
+                    writeLine(move.getCommand());
+                }
+            }
         } finally {
             if (reader != null) {
                 reader.close();
