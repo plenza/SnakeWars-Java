@@ -14,7 +14,7 @@ public class Move {
     public static final Move LEFT = new Move("LEFT", -1);
     public static final Move RIGHT = new Move("RIGHT", 1);
     public static final Move STRAIGHT = new Move("STRAIGHT", 0);
-    public static final Move NONE = new Move("LEFT", 0);
+    public static final Move NONE = new Move("", 0);
     private static List<DirectionOffset> offsets = Arrays.asList(
             new DirectionOffset(new Offset(0, 1), SnakeDirection.Up),
             new DirectionOffset(new Offset(1, 0), SnakeDirection.Right),
@@ -31,7 +31,7 @@ public class Move {
 
     public PointDTO getSnakeNewHead(SnakeDTO snake, SizeDTO boardSize) {
         int index = IntStream.range(0, offsets.size())
-                .filter(indexOfOffset -> offsets.get(indexOfOffset).SnakeDirection == snake.getDirection())
+                .filter(indexOfOffset -> offsets.get(indexOfOffset).SnakeDirection.equals(snake.getDirection()))
                 .findFirst().getAsInt();
         DirectionOffset offset = offsets.get((index + moveOffset + 4) % 4);
         PointDTO newHead = offsetModule(snake.getHead(), offset.Offset, boardSize);

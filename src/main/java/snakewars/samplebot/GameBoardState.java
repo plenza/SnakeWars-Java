@@ -24,7 +24,7 @@ public class GameBoardState {
     }
 
     public SnakeDTO getSnake(String snakeId) {
-        return gameState.getSnakes().stream().findFirst().get();
+        return gameState.getSnakes().stream().filter(snake -> snake.getId().equals(snakeId)).findFirst().get();
     }
 
     public Set<PointDTO> getOccupiedCells() {
