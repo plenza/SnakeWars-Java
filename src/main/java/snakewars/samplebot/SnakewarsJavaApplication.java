@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import snakewars.samplebot.dtos.GameStateDTO;
+import snakewars.samplebot.logic.SnakeEngine;
 
 import java.io.*;
 import java.net.Socket;
