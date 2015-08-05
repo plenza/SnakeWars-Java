@@ -1,10 +1,12 @@
 package snakewars.samplebot;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import snakewars.samplebot.dtos.GameStateDTO;
 
 import java.io.*;
 import java.net.Socket;
@@ -24,6 +26,7 @@ public class SnakewarsJavaApplication implements CommandLineRunner {
 
     private BufferedReader reader;
     private BufferedWriter writer;
+    private Gson gson = new Gson();
 
     public static void main(String[] args) {
         SpringApplication.run(SnakewarsJavaApplication.class, args);
@@ -31,8 +34,6 @@ public class SnakewarsJavaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(server);
-        System.out.println(port);
         Socket tcpSocket = new Socket(server, port);
         try {
             reader = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
@@ -48,6 +49,9 @@ public class SnakewarsJavaApplication implements CommandLineRunner {
             System.out.println(String.format("My snake id: {%s}", mySnakeId));
 
             SnakeEngine snakeEngine = new SnakeEngine(mySnakeId);
+
+            String json = readLine();
+            GameStateDTO gameState = gson.fromJson(json, GameStateDTO.class);
         } finally {
             if (reader != null) {
                 reader.close();
